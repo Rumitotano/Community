@@ -3,21 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>До выборов в мэры Лесограда</title>
+  <title>Выборы в мэры Лесограда</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #1e5799, #207cca);
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --text-light: #ecf0f1;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+      color: var(--text-light);
+    }
+
+    /* Навигационная плашка */
+    .navbar {
+      background-color: var(--primary-color);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+    }
+
+    .nav-item {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    .nav-item.active {
+      background-color: var(--accent-color);
+    }
+
+    /* Контейнер страниц */
+    .page-container {
+      width: 500vw;
+      height: 100vh;
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .page {
+      width: 100vw;
+      height: 100vh;
+      padding: 80px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Стили для разных страниц */
+    #home {
+      background: linear-gradient(135deg, #1e5799, #207cca);
+    }
+
+    #program {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    #team {
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    }
+
+    #about {
+      background: linear-gradient(135deg, #e67e22, #f39c12);
+    }
+
+    #contact {
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+    }
+
+    /* Стили таймера */
     .countdown-container {
       background: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
@@ -26,12 +104,6 @@
       max-width: 600px;
       width: 90%;
       animation: fadeIn 1.5s ease-in-out;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .timer {
@@ -67,48 +139,150 @@
       margin: 5px 0 0;
     }
 
+    /* Анимации */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 600px) {
+    @keyframes slideFromRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    @keyframes slideFromLeft {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+
+    /* Контент страниц */
+    .page-content {
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-wrap: wrap;
+        padding: 10px 0;
+      }
+
+      .nav-item {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+        margin: 2px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
       .timer {
         flex-wrap: wrap;
       }
+
       .timer-block {
         min-width: 70px;
       }
-      h1 {
-        font-size: 1.8rem;
+
+      .timer-value {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
-<div class="countdown-container">
-  <h1>До выборов в мэры Лесограда</h1>
-  <div class="timer" id="countdown">
-    <div class="timer-block">
-      <p class="timer-value" id="days">00</p>
-      <p class="timer-label">дней</p>
+<!-- Навигационная плашка -->
+<nav class="navbar">
+  <a href="#" class="nav-item active" data-page="home">Таймер</a>
+  <a href="#" class="nav-item" data-page="program">Программа</a>
+  <a href="#" class="nav-item" data-page="team">Команда</a>
+  <a href="#" class="nav-item" data-page="about">Про нас</a>
+  <a href="#" class="nav-item" data-page="contact">Связь с нами</a>
+</nav>
+
+<!-- Контейнер страниц -->
+<div class="page-container" id="pageContainer">
+  <!-- Главная страница с таймером -->
+  <div class="page" id="home">
+    <div class="countdown-container">
+      <h1>До выборов в мэры Лесограда</h1>
+      <div class="timer" id="countdown">
+        <div class="timer-block">
+          <p class="timer-value" id="days">00</p>
+          <p class="timer-label">дней</p>
+        </div>
+        <div class="timer-block">
+          <p class="timer-value" id="hours">00</p>
+          <p class="timer-label">часов</p>
+        </div>
+        <div class="timer-block">
+          <p class="timer-value" id="minutes">00</p>
+          <p class="timer-label">минут</p>
+        </div>
+        <div class="timer-block">
+          <p class="timer-value" id="seconds">00</p>
+          <p class="timer-label">секунд</p>
+        </div>
+      </div>
     </div>
-    <div class="timer-block">
-      <p class="timer-value" id="hours">00</p>
-      <p class="timer-label">часов</p>
+  </div>
+
+  <!-- Страница программы -->
+  <div class="page" id="program">
+    <div class="page-content">
+      <h1>Наша программа</h1>
+      <p>Здесь будет подробное описание предвыборной программы</p>
+      <!-- Добавьте больше контента -->
     </div>
-    <div class="timer-block">
-      <p class="timer-value" id="minutes">00</p>
-      <p class="timer-label">минут</p>
+  </div>
+
+  <!-- Страница команды -->
+  <div class="page" id="team">
+    <div class="page-content">
+      <h1>Наша команда</h1>
+      <p>Знакомьтесь с командой, которая работает над изменениями в нашем городе.</p>
+      <!-- Добавьте больше контента -->
     </div>
-    <div class="timer-block">
-      <p class="timer-value" id="seconds">00</p>
-      <p class="timer-label">секунд</p>
+  </div>
+
+  <!-- Страница "О нас" -->
+  <div class="page" id="about">
+    <div class="page-content">
+      <h1>О нашем движении</h1>
+      <p>Информация о кандидате и целях нашей кампании.</p>
+      <!-- Добавьте больше контента -->
+    </div>
+  </div>
+
+  <!-- Страница контактов -->
+  <div class="page" id="contact">
+    <div class="page-content">
+      <h1>Свяжитесь с нами</h1>
+      <p>Телефон: +7 800-555-35-35</p>
+      <p>Email: goidazvo.ru</p>
+      <!-- Добавьте больше контента -->
     </div>
   </div>
 </div>
 
 <script>
+  // Таймер
   const targetDate = new Date("June 26, 2025 16:15:00").getTime();
 
   function updateCountdown() {
@@ -136,7 +310,63 @@
   }
 
   setInterval(updateCountdown, 1000);
-  updateCountdown(); // Запускаем сразу
+  updateCountdown();
+
+  // Навигация с анимацией
+  const navItems = document.querySelectorAll('.nav-item');
+  const pageContainer = document.getElementById('pageContainer');
+  let currentPage = 0;
+  const pageCount = 5;
+
+  // Обработчики для навигации
+  navItems.forEach((item, index) => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateToPage(index);
+    });
+  });
+
+  // Функция навигации
+  function navigateToPage(pageIndex) {
+    if (pageIndex === currentPage) return;
+
+    // Обновляем активный элемент навигации
+    navItems.forEach(item => item.classList.remove('active'));
+    navItems[pageIndex].classList.add('active');
+
+    // Анимация перехода
+    pageContainer.style.transform = `translateX(-${pageIndex * 100}vw)`;
+    currentPage = pageIndex;
+  }
+
+  // Обработчик свайпов (для мобильных устройств)
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+
+  document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+
+  function handleSwipe() {
+    const threshold = 50; // Минимальная дистанция свайпа
+
+    if (touchEndX < touchStartX - threshold) {
+      // Свайп влево
+      if (currentPage < pageCount - 1) {
+        navigateToPage(currentPage + 1);
+      }
+    } else if (touchEndX > touchStartX + threshold) {
+      // Свайп вправо
+      if (currentPage > 0) {
+        navigateToPage(currentPage - 1);
+      }
+    }
+  }
 </script>
 </body>
 </html>
