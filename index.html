@@ -150,12 +150,14 @@
       backdrop-filter: blur(5px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s;
+      text-align: center;
     }
 
     .timer-value {
       font-size: 3rem;
       font-weight: bold;
       margin: 0;
+      animation: popIn 0.3s ease-in-out;
     }
 
     .timer-label {
@@ -167,6 +169,11 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     /* Контент страниц */
@@ -210,26 +217,11 @@
       }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 420px) {
       .timer-block {
         width: 48%;
         min-width: 48%;
         font-size: 1rem;
-      }
-
-      .timer-value {
-        font-size: 2.2rem;
-      }
-
-      .timer-label {
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 375px) {
-      .timer-block {
-        width: 100%;
-        min-width: 100%;
       }
 
       .timer-value {
@@ -238,6 +230,21 @@
 
       .timer-label {
         font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .timer-block {
+        width: 100%;
+        min-width: 100%;
+      }
+
+      .timer-value {
+        font-size: 1.8rem;
+      }
+
+      .timer-label {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -336,10 +343,25 @@
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById("days").textContent = days.toString().padStart(2, '0');
-    document.getElementById("hours").textContent = Math.floor(hours).toString().padStart(2, '0');
-    document.getElementById("minutes").textContent = Math.floor(minutes).toString().padStart(2, '0');
-    document.getElementById("seconds").textContent = Math.floor(seconds).toString().padStart(2, '0');
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    animateValue(daysEl, days);
+    animateValue(hoursEl, hours);
+    animateValue(minutesEl, minutes);
+    animateValue(secondsEl, seconds);
+  }
+
+  function animateValue(element, value) {
+    const newValue = value.toString().padStart(2, '0');
+    if (element.textContent !== newValue) {
+      element.textContent = newValue;
+      element.style.animation = 'none';
+      void element.offsetWidth; // триггер перерисовки
+      element.style.animation = 'popIn 0.3s ease-in-out';
+    }
   }
 
   setInterval(updateCountdown, 1000);
