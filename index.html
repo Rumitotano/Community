@@ -178,28 +178,26 @@
     /* Адаптивность */
     @media (max-width: 768px) {
       .navbar {
-        flex-wrap: wrap;
-        padding: 10px 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
       }
-
       .nav-item {
-        padding: 8px 10px;
+        display: inline-block;
+        flex: none;
+        padding: 10px 12px;
         font-size: 0.9rem;
-        margin: 2px;
       }
-
       h1 {
         font-size: 2rem;
       }
-
       .timer {
         flex-wrap: wrap;
       }
-
       .timer-block {
         min-width: 70px;
       }
-
       .timer-value {
         font-size: 2rem;
       }
@@ -213,7 +211,7 @@
   <a href="#" class="nav-item" data-page="program">Программа</a>
   <a href="#" class="nav-item" data-page="team">Команда</a>
   <a href="#" class="nav-item" data-page="about">Про нас</a>
-  <a href="#" class="nav-item" data-page="contact">Связь с нами</a>
+  <a href="#" class="nav-item" data-page="contact">Связаться</a>
 </nav>
 
 <!-- Контейнер страниц -->
@@ -247,7 +245,7 @@
   <div class="page" id="program">
     <div class="page-content">
       <h1>Наша программа</h1>
-      <p>Здесь будет подробное описание предвыборной программы</p>
+      <p>Здесь будет подробное описание предвыборной программы кандидата в мэры Лесограда.</p>
       <!-- Добавьте больше контента -->
     </div>
   </div>
@@ -274,8 +272,8 @@
   <div class="page" id="contact">
     <div class="page-content">
       <h1>Свяжитесь с нами</h1>
-      <p>Телефон: +7 800-555-35-35</p>
-      <p>Email: goidazvo.ru</p>
+      <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+      <p>Email: campaign@lesograd.ru</p>
       <!-- Добавьте больше контента -->
     </div>
   </div>
