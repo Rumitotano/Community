@@ -127,13 +127,17 @@
       max-width: 600px;
       width: 90%;
       animation: fadeIn 1.5s ease-in-out;
+      text-align: center;
     }
 
     .timer {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 15px;
       margin-top: 20px;
+      flex-wrap: wrap;
+      row-gap: 10px;
     }
 
     .timer-block {
@@ -141,13 +145,11 @@
       border-radius: 10px;
       padding: 15px;
       min-width: 80px;
+      max-width: 100px;
+      width: calc(25% - 11px); /* 4 блока с gap */
       backdrop-filter: blur(5px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s;
-    }
-
-    .timer-block:hover {
-      transform: scale(1.05);
     }
 
     .timer-value {
@@ -179,12 +181,14 @@
       font-size: 2.5rem;
       margin-bottom: 30px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      text-align: center;
     }
 
     p {
       font-size: 1.2rem;
       line-height: 1.6;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     /* Адаптивность */
@@ -204,14 +208,36 @@
       h1 {
         font-size: 2rem;
       }
-      .timer {
-        flex-wrap: wrap;
-      }
+    }
+
+    @media (max-width: 500px) {
       .timer-block {
-        min-width: 70px;
+        width: 48%;
+        min-width: 48%;
+        font-size: 1rem;
       }
+
+      .timer-value {
+        font-size: 2.2rem;
+      }
+
+      .timer-label {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .timer-block {
+        width: 100%;
+        min-width: 100%;
+      }
+
       .timer-value {
         font-size: 2rem;
+      }
+
+      .timer-label {
+        font-size: 0.85rem;
       }
     }
   </style>
