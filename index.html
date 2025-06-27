@@ -22,6 +22,7 @@
       font-family: 'Roboto', sans-serif;
       overflow-x: hidden;
       color: var(--text-light);
+      background-color: #1a1a1a;
     }
 
     /* Навигационная плашка */
@@ -176,6 +177,34 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
+    /* Блок с кандидатом — вне таймера */
+    .candidate-wrapper {
+      margin-top: 100px;
+      text-align: center;
+    }
+
+    .candidate-image {
+      width: 450px;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      border: 3px solid #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .candidate-image:hover {
+      transform: scale(1.05);
+    }
+
+    .candidate-name {
+      margin-top: 15px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
     /* Контент страниц */
     .page-content {
       max-width: 800px;
@@ -196,6 +225,17 @@
       line-height: 1.6;
       margin-bottom: 20px;
       text-align: center;
+    }
+
+    .tg-link {
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: underline;
+      transition: color 0.3s;
+    }
+
+    .tg-link:hover {
+      color: #ffd700;
     }
 
     /* Адаптивность */
@@ -231,6 +271,15 @@
       .timer-label {
         font-size: 0.85rem;
       }
+
+      .candidate-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .candidate-name {
+        font-size: 1.2rem;
+      }
     }
 
     @media (max-width: 400px) {
@@ -257,7 +306,7 @@
   <a href="#" class="nav-item" data-page="program">Программа</a>
   <a href="#" class="nav-item" data-page="team">Команда</a>
   <a href="#" class="nav-item" data-page="about">Про нас</a>
-  <a href="#" class="nav-item" data-page="contact">Связаться</a>
+  <a href="#" class="nav-item" data-page="contact">Связь с нами</a>
 </nav>
 
 <!-- Контейнер страниц -->
@@ -284,6 +333,12 @@
           <p class="timer-label">секунд</p>
         </div>
       </div>
+    </div>
+
+    <!-- Информация о кандидате — вне затемнённого контейнера -->
+    <div class="candidate-wrapper">
+      <img src="4.png" alt="Артём Пронькин" class="candidate-image">
+      <div class="candidate-name">Наш кандидат — Артём Пронькин</div>
     </div>
   </div>
 
@@ -315,8 +370,7 @@
   <div class="page" id="contact">
     <div class="page-content">
       <h1>Свяжитесь с нами</h1>
-      <p>Телефон: +7 (XXX) XXX-XX-XX</p>
-      <p>Email: campaign@lesograd.ru</p>
+      <p><a href="http://t.me/anonaskbot?start=C72mw8Ripmecu1t" target="_blank" class="tg-link">Написать в Telegram</a></p>
     </div>
   </div>
 </div>
