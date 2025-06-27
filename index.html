@@ -314,7 +314,7 @@
   <!-- Главная страница с таймером -->
   <div class="page active" id="home">
     <div class="countdown-container">
-      <h1>До выборов в мэры Лесограда</h1>
+      <h1>Мы проиграли(</h1> <!-- До выборов в мэры Лесограда -->
       <div class="timer" id="countdown">
         <div class="timer-block">
           <p class="timer-value" id="days">00</p>
@@ -383,10 +383,11 @@
     const now = new Date().getTime();
     const diff = targetDate - now;
 
+    //выборы начались
     if (diff <= 0) {
       document.getElementById("countdown").innerHTML = `
                 <div style="font-size: 2rem; padding: 20px;">
-                    Выборы начались! 🗳️
+                    спасибо что голосовали за нас ^^
                 </div>
             `;
       return;
