@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Шедевросходочка</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background-color: #121212;
       color: white;
@@ -18,10 +22,10 @@
       align-items: center;
       overflow: hidden;
       text-align: center;
-      position: fixed;
       width: 100%;
-      height: 100%;
       touch-action: manipulation;
+      position: relative;
+      padding: 20px;
     }
 
     /* Анимационные фигуры */
@@ -68,23 +72,30 @@
       }
     }
 
+    /* Основной контейнер */
+    .main-container {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     /* Контейнер таймера */
     .countdown-container {
       background: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
       padding: 30px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      max-width: 600px;
-      width: 90%;
-      margin: 0 auto 15px;
+      width: 100%;
+      margin-bottom: 15px;
       backdrop-filter: blur(5px);
-      position: relative;
-      z-index: 1;
     }
 
     h1 {
       margin: 0 0 20px;
       font-size: 2rem;
+      width: 100%;
     }
 
     .timer {
@@ -93,6 +104,7 @@
       gap: 15px;
       margin-top: 20px;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     .timer-block {
@@ -101,6 +113,8 @@
       padding: 15px;
       min-width: 80px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      flex: 1;
+      max-width: 100px;
     }
 
     .timer-value {
@@ -119,8 +133,7 @@
     .candidate-wrapper {
       text-align: center;
       margin-top: 15px;
-      position: relative;
-      z-index: 1;
+      width: 100%;
     }
 
     .candidate-image {
@@ -131,30 +144,28 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       border: 3px solid #fff;
       margin: 0 auto;
-      display: block;
-      position: relative;
     }
 
     .candidate-name {
       margin-top: 10px;
       font-size: 1.5rem;
       font-weight: bold;
-      position: relative;
-    }
-
-    /* Фиксированный контейнер для контента */
-    .content-container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
     }
 
     @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+
+      .countdown-container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+        margin-bottom: 15px;
+      }
+
       .timer-block {
         min-width: 60px;
         padding: 10px;
@@ -169,15 +180,6 @@
         height: 200px;
       }
 
-      .countdown-container {
-        margin-bottom: 10px;
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 1.7rem;
-      }
-
       .candidate-name {
         font-size: 1.3rem;
       }
@@ -186,8 +188,7 @@
 </head>
 <body>
 
-<!-- Основной контент -->
-<div class="content-container">
+<div class="main-container">
   <div class="countdown-container">
     <h1>До шедевросходочки</h1>
     <div class="timer" id="countdown">
@@ -210,7 +211,6 @@
     </div>
   </div>
 
-  <!-- Информация о кандидате -->
   <div class="candidate-wrapper">
     <img src="img.png" alt="Артём Пронькин" class="candidate-image">
     <div class="candidate-name">Бездарь Артём Пронькин, который скипает</div>
@@ -218,12 +218,12 @@
 </div>
 
 <script>
-  // Создаем летающие фигуры (увеличил количество в 1.5 раза)
+  // Создаем летающие фигуры (15 штук как было изначально)
   function createShapes() {
     const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
     const shapes = ['circle', 'triangle', 'square'];
 
-    for (let i = 0; i < 23; i++) { // Было 15, стало 23 (15 * 1.5)
+    for (let i = 0; i < 15; i++) {
       const shape = document.createElement('div');
       const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
       shape.className = `shape ${shapeType}`;
