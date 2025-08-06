@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Шедевросходочка</title>
   <style>
     body {
@@ -11,13 +11,17 @@
       font-family: Arial, sans-serif;
       background-color: #121212;
       color: white;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       overflow: hidden;
       text-align: center;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      touch-action: manipulation;
     }
 
     /* Анимационные фигуры */
@@ -72,8 +76,10 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       max-width: 600px;
       width: 90%;
-      margin: 0 auto 15px; /* Уменьшил отступ снизу */
+      margin: 0 auto 15px;
       backdrop-filter: blur(5px);
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -112,7 +118,9 @@
     /* Блок с кандидатом */
     .candidate-wrapper {
       text-align: center;
-      margin-top: 15px; /* Уменьшил отступ сверху */
+      margin-top: 15px;
+      position: relative;
+      z-index: 1;
     }
 
     .candidate-image {
@@ -124,12 +132,26 @@
       border: 3px solid #fff;
       margin: 0 auto;
       display: block;
+      position: relative;
     }
 
     .candidate-name {
       margin-top: 10px;
       font-size: 1.5rem;
       font-weight: bold;
+      position: relative;
+    }
+
+    /* Фиксированный контейнер для контента */
+    .content-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
     }
 
     @media (max-width: 600px) {
@@ -151,47 +173,57 @@
         margin-bottom: 10px;
         padding: 20px;
       }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .candidate-name {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
 
 <!-- Основной контент -->
-<div class="countdown-container">
-  <h1>До шедевросходочки</h1>
-  <div class="timer" id="countdown">
-    <div class="timer-block">
-      <p class="timer-value" id="days">00</p>
-      <p class="timer-label">дней</p>
+<div class="content-container">
+  <div class="countdown-container">
+    <h1>До шедевросходочки</h1>
+    <div class="timer" id="countdown">
+      <div class="timer-block">
+        <p class="timer-value" id="days">00</p>
+        <p class="timer-label">дней</p>
+      </div>
+      <div class="timer-block">
+        <p class="timer-value" id="hours">00</p>
+        <p class="timer-label">часов</p>
+      </div>
+      <div class="timer-block">
+        <p class="timer-value" id="minutes">00</p>
+        <p class="timer-label">минут</p>
+      </div>
+      <div class="timer-block">
+        <p class="timer-value" id="seconds">00</p>
+        <p class="timer-label">секунд</p>
+      </div>
     </div>
-    <div class="timer-block">
-      <p class="timer-value" id="hours">00</p>
-      <p class="timer-label">часов</p>
-    </div>
-    <div class="timer-block">
-      <p class="timer-value" id="minutes">00</p>
-      <p class="timer-label">минут</p>
-    </div>
-    <div class="timer-block">
-      <p class="timer-value" id="seconds">00</p>
-      <p class="timer-label">секунд</p>
-    </div>
+  </div>
+
+  <!-- Информация о кандидате -->
+  <div class="candidate-wrapper">
+    <img src="img.png" alt="Артём Пронькин" class="candidate-image">
+    <div class="candidate-name">Бездарь Артём Пронькин, который скипает</div>
   </div>
 </div>
 
-<!-- Информация о кандидате -->
-<div class="candidate-wrapper">
-  <img src="img.png" alt="Артём Пронькин" class="candidate-image">
-  <div class="candidate-name">Бездарь Артём Пронькин, который скипает</div>
-</div>
-
 <script>
-  // Создаем летающие фигуры
+  // Создаем летающие фигуры (увеличил количество в 1.5 раза)
   function createShapes() {
     const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
     const shapes = ['circle', 'triangle', 'square'];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 23; i++) { // Было 15, стало 23 (15 * 1.5)
       const shape = document.createElement('div');
       const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
       shape.className = `shape ${shapeType}`;
