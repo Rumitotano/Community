@@ -1,125 +1,70 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Выборы в мэры Лесограда</title>
   <style>
-    :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #e74c3c;
-      --text-light: #ecf0f1;
-    }
-
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      overflow-x: hidden;
-      color: var(--text-light);
-      background-color: #1a1a1a;
-    }
-
-    /* Навигационная плашка */
-    .navbar {
-      background-color: var(--primary-color);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0;
-    }
-
-    .nav-item {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
       color: white;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 10px 15px;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .nav-item:hover {
-      background-color: var(--secondary-color);
-      transform: translateY(-3px);
-    }
-
-    .nav-item.active {
-      background-color: var(--accent-color);
-    }
-
-    /* Контейнер страниц */
-    .page-container {
-      width: 100vw;
       height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .page {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      padding: 80px 20px 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.6s ease-in-out, visibility 0.6s;
-      pointer-events: none;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
     }
 
-    .page.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .page::before {
-      content: '';
+    /* Анимационные фигуры */
+    .shape {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      opacity: 0.3;
+      animation: float 15s infinite linear;
       z-index: -1;
-      opacity: 1;
-      transition: opacity 0.6s ease-in-out;
     }
 
-    #home::before {
-      background: linear-gradient(135deg, #1e5799, #207cca);
+    .circle {
+      border-radius: 50%;
+      background: linear-gradient(45deg, #3498db, #e74c3c);
     }
 
-    #program::before {
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
+    .triangle {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: transparent;
+      border-bottom-color: #2ecc71;
     }
 
-    #team::before {
-      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    .square {
+      border-radius: 5px;
+      background: linear-gradient(45deg, #9b59b6, #f1c40f);
     }
 
-    #about::before {
-      background: linear-gradient(135deg, #e67e22, #f39c12);
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+      }
+      25% {
+        transform: translateY(-100px) rotate(90deg) translateX(100px);
+      }
+      50% {
+        transform: translateY(0) rotate(180deg) translateX(0);
+      }
+      75% {
+        transform: translateY(100px) rotate(270deg) translateX(-100px);
+      }
+      100% {
+        transform: translateY(0) rotate(360deg) translateX(0);
+      }
     }
 
-    #contact::before {
-      background: linear-gradient(135deg, #c0392b, #e74c3c);
-    }
-
-    /* Стили таймера */
+    /* Контейнер таймера */
     .countdown-container {
       background: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
@@ -127,18 +72,21 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       max-width: 600px;
       width: 90%;
-      animation: fadeIn 1.5s ease-in-out;
-      text-align: center;
+      margin: 0 auto 15px; /* Уменьшил отступ снизу */
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 2rem;
     }
 
     .timer {
       display: flex;
       justify-content: center;
-      align-items: center;
       gap: 15px;
       margin-top: 20px;
       flex-wrap: wrap;
-      row-gap: 10px;
     }
 
     .timer-block {
@@ -146,19 +94,13 @@
       border-radius: 10px;
       padding: 15px;
       min-width: 80px;
-      max-width: 100px;
-      width: calc(25% - 11px); /* 4 блока с gap */
-      backdrop-filter: blur(5px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s;
-      text-align: center;
     }
 
     .timer-value {
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: bold;
       margin: 0;
-      animation: popIn 0.3s ease-in-out;
     }
 
     .timer-label {
@@ -167,285 +109,155 @@
       margin: 5px 0 0;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Блок с кандидатом — вне таймера */
+    /* Блок с кандидатом */
     .candidate-wrapper {
-      margin-top: 100px;
       text-align: center;
+      margin-top: 15px; /* Уменьшил отступ сверху */
     }
 
     .candidate-image {
-      width: 450px;
-      height: 560px;
+      width: 200px;
+      height: 250px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       border: 3px solid #fff;
-      transition: transform 0.3s ease;
-    }
-
-    .candidate-image:hover {
-      transform: scale(1.05);
+      margin: 0 auto;
+      display: block;
     }
 
     .candidate-name {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 1.5rem;
       font-weight: bold;
-      color: #ffffff;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
 
-    /* Контент страниц */
-    .page-content {
-      max-width: 800px;
-      width: 90%;
-      text-align: center;
-      animation: fadeIn 1s ease-out;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
-
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .tg-link {
-      font-size: 1.2rem;
-      color: #fff;
-      text-decoration: underline;
-      transition: color 0.3s;
-    }
-
-    .tg-link:hover {
-      color: #ffd700;
-    }
-
-    /* Адаптивность */
-    @media (max-width: 768px) {
-      .navbar {
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        justify-content: flex-start;
-      }
-      .nav-item {
-        display: inline-block;
-        flex: none;
-        padding: 10px 12px;
-        font-size: 0.9rem;
-      }
-      h1 {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       .timer-block {
-        width: 48%;
-        min-width: 48%;
-        font-size: 1rem;
+        min-width: 60px;
+        padding: 10px;
       }
 
       .timer-value {
         font-size: 2rem;
-      }
-
-      .timer-label {
-        font-size: 0.85rem;
       }
 
       .candidate-image {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 200px;
       }
 
-      .candidate-name {
-        font-size: 1.2rem;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .timer-block {
-        width: 100%;
-        min-width: 100%;
-      }
-
-      .timer-value {
-        font-size: 1.8rem;
-      }
-
-      .timer-label {
-        font-size: 0.8rem;
+      .countdown-container {
+        margin-bottom: 10px;
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- Навигационная плашка -->
-<nav class="navbar">
-  <a href="#" class="nav-item active" data-page="home">Таймер</a>
-  <a href="#" class="nav-item" data-page="program">Программа</a>
-  <a href="#" class="nav-item" data-page="team">Команда</a>
-  <a href="#" class="nav-item" data-page="about">Про нас</a>
-  <a href="#" class="nav-item" data-page="contact">Связь с нами</a>
-</nav>
-
-<!-- Контейнер страниц -->
-<div class="page-container" id="pageContainer">
-  <!-- Главная страница с таймером -->
-  <div class="page active" id="home">
-    <div class="countdown-container">
-      <h1>Мы проиграли(</h1> <!-- До выборов в мэры Лесограда -->
-      <div class="timer" id="countdown">
-        <div class="timer-block">
-          <p class="timer-value" id="days">00</p>
-          <p class="timer-label">дней</p>
-        </div>
-        <div class="timer-block">
-          <p class="timer-value" id="hours">00</p>
-          <p class="timer-label">часов</p>
-        </div>
-        <div class="timer-block">
-          <p class="timer-value" id="minutes">00</p>
-          <p class="timer-label">минут</p>
-        </div>
-        <div class="timer-block">
-          <p class="timer-value" id="seconds">00</p>
-          <p class="timer-label">секунд</p>
-        </div>
-      </div>
+<!-- Основной контент -->
+<div class="countdown-container">
+  <h1>До последней сходки с Владом</h1>
+  <div class="timer" id="countdown">
+    <div class="timer-block">
+      <p class="timer-value" id="days">00</p>
+      <p class="timer-label">дней</p>
     </div>
-
-    <!-- Информация о кандидате — вне затемнённого контейнера -->
-    <div class="candidate-wrapper">
-      <img src="4.png" alt="Артём Пронькин" class="candidate-image">
-      <div class="candidate-name">Наш кандидат — Артём Пронькин</div>
+    <div class="timer-block">
+      <p class="timer-value" id="hours">00</p>
+      <p class="timer-label">часов</p>
     </div>
-  </div>
-
-  <!-- Страница программы -->
-  <div class="page" id="program">
-    <div class="page-content">
-      <h1>Наша программа</h1>
-      <p>Здесь будет подробное описание предвыборной программы кандидата в мэры Лесограда.</p>
+    <div class="timer-block">
+      <p class="timer-value" id="minutes">00</p>
+      <p class="timer-label">минут</p>
     </div>
-  </div>
-
-  <!-- Страница команды -->
-  <div class="page" id="team">
-    <div class="page-content">
-      <h1>Наша команда</h1>
-      <p>Знакомьтесь с командой, которая работает над изменениями в нашем городе.</p>
-    </div>
-  </div>
-
-  <!-- Страница "О нас" -->
-  <div class="page" id="about">
-    <div class="page-content">
-      <h1>О нашем движении</h1>
-      <p>Информация о кандидате и целях нашей кампании.</p>
-    </div>
-  </div>
-
-  <!-- Страница контактов -->
-  <div class="page" id="contact">
-    <div class="page-content">
-      <h1>Свяжитесь с нами</h1>
-      <p><a href="http://t.me/anonaskbot?start=C72mw8Ripmecu1t" target="_blank" class="tg-link">Написать в Telegram</a></p>
+    <div class="timer-block">
+      <p class="timer-value" id="seconds">00</p>
+      <p class="timer-label">секунд</p>
     </div>
   </div>
 </div>
 
-<script>
-  // Таймер
-  const targetDate = new Date("June 26, 2025 16:15:00").getTime();
+<!-- Информация о кандидате -->
+<div class="candidate-wrapper">
+  <img src="img.png" alt="Артём Пронькин" class="candidate-image">
+  <div class="candidate-name">Артём Пронькин</div>
+</div>
 
+<script>
+  // Создаем летающие фигуры
+  function createShapes() {
+    const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
+    const shapes = ['circle', 'triangle', 'square'];
+
+    for (let i = 0; i < 15; i++) {
+      const shape = document.createElement('div');
+      const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+      shape.className = `shape ${shapeType}`;
+
+      // Размеры и позиция
+      const size = Math.random() * 50 + 20;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      if (shapeType === 'circle') {
+        shape.style.width = `${size}px`;
+        shape.style.height = `${size}px`;
+        shape.style.background = color;
+      }
+      else if (shapeType === 'triangle') {
+        shape.style.borderWidth = `0 ${size/2}px ${size}px ${size/2}px`;
+        shape.style.borderBottomColor = color;
+      }
+      else {
+        shape.style.width = `${size}px`;
+        shape.style.height = `${size}px`;
+        shape.style.background = color;
+      }
+
+      // Позиция и анимация
+      shape.style.left = `${Math.random() * 100}vw`;
+      shape.style.top = `${Math.random() * 100}vh`;
+      shape.style.animationDuration = `${Math.random() * 20 + 10}s`;
+      shape.style.animationDelay = `${Math.random() * 5}s`;
+
+      document.body.appendChild(shape);
+    }
+  }
+
+  // Таймер обратного отсчета
   function updateCountdown() {
+    const targetDate = new Date('2025-08-07T14:00:00').getTime();
     const now = new Date().getTime();
     const diff = targetDate - now;
 
-    //выборы начались
+    // Если время вышло
     if (diff <= 0) {
-      document.getElementById("countdown").innerHTML = `
-                <div style="font-size: 2rem; padding: 20px;">
-                    спасибо что голосовали за нас ^^
-                </div>
-            `;
+      document.getElementById('countdown').innerHTML = `
+        <div style="font-size: 1.5rem; padding: 20px;">
+          Шедевросходочка началась!
+        </div>
+      `;
       return;
     }
 
+    // Рассчитываем дни, часы, минуты, секунды
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-
-    animateValue(daysEl, days);
-    animateValue(hoursEl, hours);
-    animateValue(minutesEl, minutes);
-    animateValue(secondsEl, seconds);
+    // Обновляем значения
+    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
   }
 
-  function animateValue(element, value) {
-    const newValue = value.toString().padStart(2, '0');
-    if (element.textContent !== newValue) {
-      element.textContent = newValue;
-      element.style.animation = 'none';
-      void element.offsetWidth; // триггер перерисовки
-      element.style.animation = 'popIn 0.3s ease-in-out';
-    }
-  }
-
-  setInterval(updateCountdown, 1000);
+  // Инициализация
+  createShapes();
   updateCountdown();
-
-  // Навигация с анимацией
-  const navItems = document.querySelectorAll('.nav-item');
-  const pages = document.querySelectorAll('.page');
-
-  navItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pageId = item.getAttribute('data-page');
-
-      // Убираем активный класс у всех
-      navItems.forEach(nav => nav.classList.remove('active'));
-      item.classList.add('active');
-
-      // Скрываем все страницы
-      pages.forEach(page => {
-        page.classList.remove('active');
-      });
-
-      // Через небольшую задержку показываем нужную (чтобы анимация сработала)
-      setTimeout(() => {
-        document.getElementById(pageId).classList.add('active');
-      }, 50);
-    });
-  });
+  setInterval(updateCountdown, 1000);
 </script>
 </body>
 </html>
