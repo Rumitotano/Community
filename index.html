@@ -134,13 +134,14 @@
       text-align: center;
       margin-top: 15px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .candidate-image {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      margin: 0 auto;
+      max-width: 30%;
+      height: auto;
     }
 
     .candidate-name {
@@ -195,6 +196,8 @@
     @media (max-width: 600px) {
       body {
         padding: 15px;
+        justify-content: flex-start;
+        padding-top: 40px;
       }
 
       .countdown-container {
@@ -216,8 +219,8 @@
       }
 
       .candidate-image {
-        width: 150px;
-        height: 200px;
+        max-width: 85%;
+        max-height: 60vh;
       }
 
       .candidate-name {
@@ -230,6 +233,34 @@
 
       .confetti-piece {
         font-size: 1rem;
+      }
+    }
+
+    /* Дополнительные медиа-запросы для очень маленьких экранов */
+    @media (max-width: 400px) {
+      .candidate-image {
+        max-width: 90%;
+      }
+
+      .timer {
+        gap: 10px;
+      }
+
+      .timer-block {
+        min-width: 55px;
+        padding: 8px;
+      }
+
+      .timer-value {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Для очень высоких экранов */
+    @media (min-height: 800px) and (max-width: 600px) {
+      body {
+        justify-content: center;
+        padding-top: 20px;
       }
     }
   </style>
